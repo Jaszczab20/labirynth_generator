@@ -1,0 +1,6 @@
+Generator Labiryntów – opis słowny przypadków użycia
+
+Aplikacja pozwala użytkownikowi wygenerować labirynt, a następnie podjąć decyzję o wykonaniu dodatkowych czynności.
+W pierwszej kolejności użytkownik wybiera rozmiar labiryntu oraz poziom trudności, następnie wciska przycisk „generuj”. 
+Po stworzeniu labiryntu użytkownik może użyć opcji rozwiązania labiryntu przez program lub zapisania go do pliku. 
+Po wykonaniu wszystkich chcianych czynności, może on wrócić do MENU.
