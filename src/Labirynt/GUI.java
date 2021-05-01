@@ -1,8 +1,14 @@
 package Labirynt;
 
+import net.miginfocom.swt.MigLayout;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,45 +16,140 @@ import java.io.IOException;
 public class GUI {
     private JFrame frame;
     private JPanel panel;
+//    private String size;
     private BorderLayout layout;
+    private String[] diff_levels = {"Trudny", "Sredni","łatwy"};
+
+
+
     public GUI () {
-        layout = new BorderLayout();
+//        layout = new BorderLayout();
         frame = new JFrame();
         panel = new JPanel();
+        rightBox pan = new rightBox();
+        pan.configure();
+
         frame.setSize(800,800);
-//        frame.add(panel);
-//        panel.setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
-//        panel.setLayout(new BorderLayout(20,20));
-//        frame.add(new JButton("CLIck"));
-//        layout.addLayoutComponent(new JButton("eghre"), BorderLayout.NORTH);
-//        panel.setBackground(Color.BLACK);
-//        panel.setLayout(layout);
-        frame.add(panel);
-        JLabel title=new JLabel("Generator Labiryntów", SwingConstants.CENTER);
+
+        panel.setSize(new Dimension(300, 300));
+        frame.add(pan , BorderLayout.EAST);
+
+        JLabel title = new JLabel("Generator Labiryntów");
+
         title.setPreferredSize(new Dimension(2,100));
         title.setFont(new Font("Verdana", Font.PLAIN, 22));
-        JButton b2=new JButton("SOUTH");;
-        JButton b3=new JButton("EAST");;
-        JButton b4=new JButton("WEST");;
-        JButton b5=new JButton("CENTER");;
-
         frame.add(title,BorderLayout.NORTH);
-        frame.add(b2,BorderLayout.SOUTH);
-        frame.add(new JButton("Generuj Labirynt"),BorderLayout.EAST);
+//        frame.add(b2,BorderLayout.SOUTH);
+//        frame.add(new JButton("Generuj Labirynt"),BorderLayout.EAST);
         ImagePanel imgPan = new ImagePanel(System.getProperty("user.dir") + File.separator + "labiryntpng.png");
-        imgPan.setBackground(Color.BLUE);
+//        imgPan.setBackground(Color.BLUE);
         imgPan.setSize(30, 30);
         frame.add(imgPan,BorderLayout.CENTER);
 //        frame.add(b5,BorderLayout.CENTER);
 
 
-        panel.add(new JButton("Generuj Labirynt"));
+//        panel.add(new JButton("Generuj Labirynt"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Generator Labiryntów");
 //        frame.pack();
         frame.setVisible(true);
 
     }
+
+
+    private class rightBox extends JPanel {
+        public Integer size_value;
+        public String selected_level;
+
+
+
+        public void configure() {
+            setSize(new Dimension(300, 300));
+            setLayout(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
+
+
+            SpinnerModel model =
+                    new SpinnerNumberModel(40, //initial value
+                            0, //min
+                            100, //max
+                            10);                //step
+
+
+            JButton button = new JButton("Generuj Labirynt");
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent h) {
+                    System.out.println("tutaj nowe okno z generatorem labiryntów");
+                }
+            });
+
+            JLabel size = new JLabel("Wymiary");
+
+            JLabel diff_level = new JLabel("Poziom Trudności");
+
+            JButton load_labirynth = new JButton("Wczytaj labirynt");
+            load_labirynth.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("tutaj otworzy się ookno z przeglądaniem plików");
+                }
+            });
+
+            JSpinner input_size = new JSpinner(model);
+            input_size.addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    size_value = (Integer) input_size.getValue();
+                    System.out.println(size_value);
+                }
+            });
+
+
+            JComboBox levels_list = new JComboBox(diff_levels);
+            levels_list.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+//                    Integer b =;
+                    selected_level = diff_levels[levels_list.getSelectedIndex()];
+                     System.out.println(selected_level);
+                }
+            });
+
+
+            c.insets = new Insets(5,5,5,5);
+            c.gridy = 0    ;
+            c.gridx = 0;
+            add(size,c);
+            c.gridy = 1;
+            c.gridx = 0;
+            add(diff_level, c);
+            c.gridy = 0;
+            c.gridx=1;
+            add(input_size, c);
+            c.gridy = 1;
+            c.gridx = 1;
+            add(levels_list, c);
+            c.gridy = 2;
+            c.gridx = 0;
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.gridwidth = 2;
+
+            add(load_labirynth, c);
+            c.gridy = 3;
+            c.gridx = 0;
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.gridwidth = 2;
+            c.ipady = 40;
+            c.insets = new Insets(70,5,5,5);
+            add(button, c);
+        }
+
+
+
+
+    }
+
 
 
 
