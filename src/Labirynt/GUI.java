@@ -58,7 +58,7 @@ public class GUI {
 
 
     private class rightBox extends JPanel {
-        public Integer size_value;
+        public Integer size_value = 40;
         public String selected_level;
 
 
@@ -80,6 +80,8 @@ public class GUI {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent h) {
+                    LabirynthGrid b = new LabirynthGrid(size_value);
+
                     System.out.println("tutaj nowe okno z generatorem labiryntów");
                 }
             });
