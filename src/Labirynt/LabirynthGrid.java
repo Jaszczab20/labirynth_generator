@@ -8,6 +8,8 @@ public class LabirynthGrid {
     Integer size;
     Cell[][] cellist ;
     Cell2[][] cell2list;
+    Cell2 current;
+    Cell2 next;
 
     public LabirynthGrid(Integer size) {
         this.size = size;
@@ -16,6 +18,13 @@ public class LabirynthGrid {
         cell2list = new Cell2[size][size];
         frame.setSize(800,800);
         this.createCanvas();
+        this.current = cell2list[0][0];
+        current.visited = true;
+        next = current.checkNeighbours(cell2list);
+        if (next != null) {
+            next.visited = true;
+            current = next;
+        }
         frame.add(new kwadrat(size), BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setTitle("Generator Labiryntów");
@@ -33,21 +42,13 @@ public class LabirynthGrid {
 
         public void paintComponent(Graphics g) {
             Integer value = (Integer) 600 / size;
-            System.out.println(value);
+//            System.out.println(value);
             for (int b = 0; b < size; b++) {
                 for (int i = 0; i < size; i++) {
-//                    cellist[i][b] = new Cell();
-//                    cell2list[i][b] = new Cell2(i, b);
-                    cell2list[0][0].setWall(false, 0);
-                    cell2list[0][0].setWall(false, 1);
-                    cell2list[0][0].setWall(false, 2);
-                    cell2list[0][0].setWall(false, 3);
-                    System.out.println(cellist[i][b]);
+//                    System.out.println(cellist[i][b]);
 //                    g.drawPolyline(new int[]{i * value, i * value + value, i * value + value, i * value, i * value},
 //                            new int[]{b * value, b * value, b * value + value, b * value + value, b * value}, 5);
                     if (cell2list[i][b].walls[0]) {
-                        System.out.println(i);
-                        System.out.println(b);
                         g.drawPolyline(new int[]{i * value, i * value + value}, new int[]{b * value, b * value}, 2);
                     }
                     if (cell2list[i][b].walls[1]) {
@@ -59,8 +60,14 @@ public class LabirynthGrid {
                     if (cell2list[i][b].walls[3]) {
                         g.drawPolyline(new int[]{i * value, i * value}, new int[]{b * value + value, b * value}, 2);
                     }
+
+                    if (cell2list[i][b].visited) {
+                        g.fillRect(i * value, b*value, value, value);
+
+                    }
                 }
             }
+
         }
 
     }
