@@ -57,7 +57,7 @@ public class GUI {
     }
 
 
-    private class rightBox extends JPanel {
+    private class rightBox extends JPanel    {
         public Integer size_value = 40;
         public String selected_level;
 
@@ -159,7 +159,11 @@ public class GUI {
 
 
         public static void main(String[] args) {
-        GUI g = new GUI();
+
+        SwingUtilities.invokeLater(
+                () -> {GUI g = new GUI();}
+        );
+
     }
 }
 

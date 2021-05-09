@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 public class LabirynthGrid {
-    private JFrame frame2;
     Integer size;
     Cell[][] cellist ;
     Cell2[][] cell2list;
@@ -16,7 +15,7 @@ public class LabirynthGrid {
 
     public LabirynthGrid(Integer size) {
         this.size = size;
-        frame2 = new JFrame();
+        JFrame frame2 = new JFrame();
         cellist = new Cell[size][size];
         cell2list = new Cell2[size][size];
         frame2.setSize(800,800);
@@ -72,7 +71,7 @@ public class LabirynthGrid {
                     }
 
                     if (cell2list[i][b].visited) {
-                        g.fillRect(i * value, b*value, value, value);
+//                        g.fillRect(i * value, b*value, value, value);
 //                        g.clearRect(i * value, b*value, value, value);
 
                     }
@@ -82,9 +81,9 @@ public class LabirynthGrid {
 //            g.fillRect(current.row, current.col, value, value);
             next = current.checkNeighbours(cell2list);
             System.out.println(next);
-            if (next == null) {
-                stack.pop();
-            }
+//            if (next == null) {
+//                stack.pop();
+//            }
             System.out.println("next");
             if (next != null) {
                 next.visited = true;
@@ -104,20 +103,22 @@ public class LabirynthGrid {
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
-//                repaint();
+                repaint();
+//                revalidate();
             } else if (stack.size() > 0) {
                 System.out.println("hello");
                 System.out.println(stack.size());
                 System.out.println(current);
-                current = stack.peek();
-                stack.pop();
+
+                current = stack.pop();
+
 //                current.printC();
                 System.out.println(current);
 //                System.out.println(current.row);
 //                System.out.println(current.col);
 //                stack.removeLast();
                System.out.println(stack.size());
-//                repaint();
+                revalidate();
             }
 
         }
