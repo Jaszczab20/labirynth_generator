@@ -1,6 +1,6 @@
 package Labirynt;
 
-import net.miginfocom.swt.MigLayout;
+//import net.miginfocom.swt.MigLayout;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

@@ -72,7 +72,9 @@ public class Cell2 {
         if (neighbours.size() > 0) {
 //            System.out.println(neighbours.size());
             Random random = new Random();
-            return neighbours.get(random.nextInt(neighbours.size()));
+            Cell2 ret = neighbours.get(random.nextInt(neighbours.size()));
+            neighbours.clear();
+            return ret;
         } else {
             System.out.println("NO");
             return null;
@@ -82,4 +84,11 @@ public class Cell2 {
 
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
 }

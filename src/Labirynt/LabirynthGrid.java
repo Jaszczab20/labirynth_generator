@@ -88,7 +88,7 @@ public class LabirynthGrid {
             if (next != null) {
                 next.visited = true;
 
-                stack.push(current);
+                stack.push(next);
 //                for (Cell2 ne: current.neighbours) {
 //                    System.out.println(ne.col);
 //                    System.out.println(ne.row);
@@ -118,7 +118,8 @@ public class LabirynthGrid {
 //                System.out.println(current.col);
 //                stack.removeLast();
                System.out.println(stack.size());
-                revalidate();
+               repaint();
+//               revalidate();
             }
 
         }
