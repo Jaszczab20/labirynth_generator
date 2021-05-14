@@ -12,20 +12,32 @@ public class LabirynthGrid {
     Cell2 current;
     Cell2 next;
     Stack<Cell2> stack = new Stack<>();
+    JFrame frame2;
 
     public LabirynthGrid(Integer size) {
         this.size = size;
-        JFrame frame2 = new JFrame();
+        frame2 = new JFrame();
+        JPanel solve_panel = new JPanel();
+        JButton solve = new JButton("Rozwiąż labirynt");
         cellist = new Cell[size][size];
         cell2list = new Cell2[size][size];
         frame2.setSize(800,800);
         this.createCanvas();
         this.current = cell2list[0][0];
+        kwadrat kw = new kwadrat(size);
 
-        frame2.add(new kwadrat(size), BorderLayout.CENTER);
+
+        solve_panel.add(solve);
+
+
+        frame2.add(kw, BorderLayout.CENTER);
+        frame2.add(solve_panel, BorderLayout.EAST);
+        frame2.setLocationRelativeTo(null);
+
         frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame2.setTitle("Generator Labiryntów");
         frame2.setVisible(true);
+
     }
 
 
@@ -80,6 +92,7 @@ public class LabirynthGrid {
             current.visited = true;
 //            g.fillRect(current.row, current.col, value, value);
             next = current.checkNeighbours(cell2list);
+
             System.out.println(next);
 //            if (next == null) {
 //                stack.pop();
@@ -103,8 +116,9 @@ public class LabirynthGrid {
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
-                repaint();
-//                revalidate();
+                //repaint();
+                //revalidate();
+                SwingUtilities.updateComponentTreeUI(frame2);
             } else if (stack.size() > 0) {
                 System.out.println("hello");
                 System.out.println(stack.size());
@@ -118,8 +132,9 @@ public class LabirynthGrid {
 //                System.out.println(current.col);
 //                stack.removeLast();
                System.out.println(stack.size());
-               repaint();
-//               revalidate();
+               //repaint();
+             //revalidate();
+             SwingUtilities.updateComponentTreeUI(frame2);
             }
 
         }
