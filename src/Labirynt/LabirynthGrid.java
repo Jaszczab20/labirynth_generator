@@ -21,17 +21,17 @@ public class LabirynthGrid {
         JButton solve = new JButton("Rozwiąż labirynt");
         cellist = new Cell[size][size];
         cell2list = new Cell2[size][size];
-        frame2.setSize(800,800);
+        frame2.setSize(785,850);
         this.createCanvas();
         this.current = cell2list[0][0];
         kwadrat kw = new kwadrat(size);
 
 
-        solve_panel.add(solve);
+        solve_panel.add(solve, BorderLayout.NORTH);
 
 
         frame2.add(kw, BorderLayout.CENTER);
-        frame2.add(solve_panel, BorderLayout.EAST);
+        frame2.add(solve_panel, BorderLayout.SOUTH);
         frame2.setLocationRelativeTo(null);
 
         frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -55,7 +55,7 @@ public class LabirynthGrid {
         }
 
         public void paintComponent(Graphics g) {
-            Integer value = (Integer) 600 / size;
+            Integer value = (Integer) 770 / size;
             for (int b = 0; b < size; b++) {
                 for (int i = 0; i < size; i++) {
 
