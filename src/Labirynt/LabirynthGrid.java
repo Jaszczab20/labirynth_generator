@@ -2,16 +2,15 @@ package Labirynt;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.LinkedList;
 import java.util.Stack;
 
 public class LabirynthGrid {
     Integer size;
     Cell[][] cellist ;
-    Cell2[][] cell2list;
-    Cell2 current;
-    Cell2 next;
-    Stack<Cell2> stack = new Stack<>();
+    Cell[][] cellList;
+    Cell current;
+    Cell next;
+    Stack<Cell> stack = new Stack<>();
     JFrame frame2;
 
     public LabirynthGrid(Integer size) {
@@ -19,15 +18,17 @@ public class LabirynthGrid {
         frame2 = new JFrame();
         JPanel solve_panel = new JPanel();
         JButton solve = new JButton("Rozwiąż labirynt");
+        JButton save = new JButton("Zapisz Labirynt");
         cellist = new Cell[size][size];
-        cell2list = new Cell2[size][size];
+        cellList = new Cell[size][size];
         frame2.setSize(800,800);
         this.createCanvas();
-        this.current = cell2list[0][0];
+        this.current = cellList[0][0];
         kwadrat kw = new kwadrat(size);
 
 
         solve_panel.add(solve);
+        solve_panel.add(save);
 
 
         frame2.add(kw, BorderLayout.CENTER);
@@ -42,7 +43,7 @@ public class LabirynthGrid {
 
 
     public void createExit() {
-        cell2list[size-1][size-1].walls[1] = false;
+        cellList[size-1][size-1].walls[1] = false;
     }
 
 
@@ -59,20 +60,20 @@ public class LabirynthGrid {
             for (int b = 0; b < size; b++) {
                 for (int i = 0; i < size; i++) {
 
-                    if (cell2list[i][b].walls[0]) {
+                    if (cellList[i][b].walls[0]) {
                         g.drawPolyline(new int[]{i * value, i * value + value}, new int[]{b * value, b * value}, 2);
                     }
-                    if (cell2list[i][b].walls[1]) {
+                    if (cellList[i][b].walls[1]) {
                         g.drawPolyline(new int[]{i * value + value, i * value + value}, new int[]{b * value, b * value + value}, 2);
                     }
-                    if (cell2list[i][b].walls[2]) {
+                    if (cellList[i][b].walls[2]) {
                         g.drawPolyline(new int[]{i * value + value, i * value}, new int[]{b * value + value, b * value + value}, 2);
                     }
-                    if (cell2list[i][b].walls[3]) {
+                    if (cellList[i][b].walls[3]) {
                         g.drawPolyline(new int[]{i * value, i * value}, new int[]{b * value + value, b * value}, 2);
                     }
 
-                    if (cell2list[i][b].visited) {
+                    if (cellList[i][b].visited) {
 //                        g.fillRect(i * value, b*value, value, value);
 //                        g.clearRect(i * value, b*value, value, value);
 
@@ -81,7 +82,7 @@ public class LabirynthGrid {
             }
             current.visited = true;
 //            g.fillRect(current.row, current.col, value, value);
-            next = current.checkNeighbours(cell2list);
+            next = current.checkNeighbours(cellList);
 
             if (next != null) {
                 next.visited = true;
@@ -113,8 +114,7 @@ public class LabirynthGrid {
     public void createCanvas() {
         for (int b = 0; b < size; b++) {
             for (int i = 0; i < size; i++) {
-                cellist[i][b] = new Cell();
-                cell2list[i][b] = new Cell2(i, b);
+                cellList[i][b] = new Cell(i, b);
             }
         }
 
@@ -122,7 +122,7 @@ public class LabirynthGrid {
 
 
 
-    public void removeWalls(Cell2 a, Cell2 b) {
+    public void removeWalls(Cell a, Cell b) {
         int x = a.row - b.row;
 
         if (x == 1) {
