@@ -27,12 +27,12 @@ public class LabirynthGrid {
         kwadrat kw = new kwadrat(size);
 
 
-        solve_panel.add(solve);
         solve_panel.add(save);
+        solve_panel.add(solve, BorderLayout.NORTH);
 
 
         frame2.add(kw, BorderLayout.CENTER);
-        frame2.add(solve_panel, BorderLayout.EAST);
+        frame2.add(solve_panel, BorderLayout.SOUTH);
         frame2.setLocationRelativeTo(null);
 
         frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -56,7 +56,7 @@ public class LabirynthGrid {
         }
 
         public void paintComponent(Graphics g) {
-            Integer value = (Integer) 600 / size;
+            Integer value = (Integer) 770 / size;
             for (int b = 0; b < size; b++) {
                 for (int i = 0; i < size; i++) {
 
