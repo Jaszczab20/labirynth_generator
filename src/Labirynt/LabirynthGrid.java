@@ -1,7 +1,13 @@
 package Labirynt;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Stack;
 
 public class LabirynthGrid {
@@ -26,6 +32,20 @@ public class LabirynthGrid {
         this.current = cellList[0][0];
         kwadrat kw = new kwadrat(size);
 
+
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent l) {
+                Container c = frame2.getContentPane();
+                BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                c.paint(im.getGraphics());
+                try {
+                    ImageIO.write(im, "PNG", new File("shot.png"));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
 
         solve_panel.add(save);
         solve_panel.add(solve, BorderLayout.NORTH);

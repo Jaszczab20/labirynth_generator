@@ -29,7 +29,7 @@ public class GUI {
         rightBox pan = new rightBox();
         pan.configure();
 
-        frame.setSize(800,800);
+        frame.setSize(850,800);
 
         panel.setSize(new Dimension(300, 300));
         frame.add(pan , BorderLayout.EAST);
