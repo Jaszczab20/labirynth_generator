@@ -40,7 +40,7 @@ public class LabirynthGrid {
                 BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
                 c.paint(im.getGraphics());
                 try {
-                    ImageIO.write(im, "PNG", new File("shot.png"));
+                    ImageIO.write(im, "PNG", new File("shot.bmp"));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }

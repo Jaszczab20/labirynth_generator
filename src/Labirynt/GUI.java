@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,8 @@ public class GUI {
 //    private String size;
     private BorderLayout layout;
     private String[] diff_levels = {"Trudny", "Sredni","łatwy"};
+    JFileChooser j;
+    ImagePanel imgPan;
 
 
 
@@ -41,7 +44,7 @@ public class GUI {
         frame.add(title,BorderLayout.NORTH);
 //        frame.add(b2,BorderLayout.SOUTH);
 //        frame.add(new JButton("Generuj Labirynt"),BorderLayout.EAST);
-        ImagePanel imgPan = new ImagePanel(System.getProperty("user.dir") + File.separator + "labiryntpng.png");
+        imgPan = new ImagePanel(System.getProperty("user.dir") + File.separator + "labiryntpng.png");
 //        imgPan.setBackground(Color.BLUE);
         imgPan.setSize(30, 30);
         frame.add(imgPan,BorderLayout.CENTER);
@@ -95,6 +98,23 @@ public class GUI {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("tutaj otworzy się ookno z przeglądaniem plików");
+                    File f = new File(System.getProperty("user.dir"));
+                    System.out.println("rgerghe");
+                    j = new JFileChooser(f, FileSystemView.getFileSystemView());
+//                    j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//                    frame.add(j, BorderLayout.CENTER);
+                    int r = j.showOpenDialog(null);
+                    if (r == JFileChooser.APPROVE_OPTION) {
+//                        title.setText(j.getSelectedFile().getAbsolutePath());
+                        Frame fr = new JFrame();
+
+                        String path = j.getSelectedFile().getAbsolutePath();
+                        System.out.println(path);
+                        fr.add(new ImagePanel(path));
+                        fr.setSize(1000,1000);
+                        fr.setVisible(true);
+//                        imgPan.setSize(30,35);
+                    }
                 }
             });
 
