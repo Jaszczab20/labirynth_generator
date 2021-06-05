@@ -11,13 +11,12 @@ import java.io.IOException;
 import java.util.Stack;
 
 public class LabirynthGrid {
-    Integer size;
-    Cell[][] cellist ;
-    Cell[][] cellList;
-    Cell current;
-    Cell next;
-    Stack<Cell> stack = new Stack<>();
-    JFrame frame2;
+    private Integer size;
+    private Cell[][] cellList;
+    private Cell current;
+    private Cell next;
+    private Stack<Cell> stack = new Stack<>();
+    private JFrame frame2;
 
     public LabirynthGrid(Integer size) {
         this.size = size;
@@ -25,10 +24,13 @@ public class LabirynthGrid {
         JPanel solve_panel = new JPanel();
         JButton solve = new JButton("Rozwiąż labirynt");
         JButton save = new JButton("Zapisz Labirynt");
-        cellist = new Cell[size][size];
         cellList = new Cell[size][size];
         frame2.setSize(800,800);
-        this.createCanvas();
+
+
+        createCanvas(size, cellList);
+
+
         this.current = cellList[0][0];
         kwadrat kw = new kwadrat(size);
 
@@ -37,13 +39,7 @@ public class LabirynthGrid {
             @Override
             public void actionPerformed(ActionEvent l) {
                 Container c = frame2.getContentPane();
-                BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
-                c.paint(im.getGraphics());
-                try {
-                    ImageIO.write(im, "PNG", new File("shot.bmp"));
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+                ImageSave(c);
             }
         });
 
@@ -61,9 +57,16 @@ public class LabirynthGrid {
 
     }
 
+    public Cell[][] getCellList() {
+        return cellList;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
 
     public void createExit() {
-        cellList[size-1][size-1].walls[1] = false;
+        cellList[size-1][size-1].getWalls()[1] = false;
     }
 
 
@@ -77,64 +80,42 @@ public class LabirynthGrid {
 
         public void paintComponent(Graphics g) {
             Integer value = (Integer) 770 / size;
+
+
             for (int b = 0; b < size; b++) {
                 for (int i = 0; i < size; i++) {
 
-                    if (cellList[i][b].walls[0]) {
+                    if (cellList[i][b].getWalls()[0]) {
                         g.drawPolyline(new int[]{i * value, i * value + value}, new int[]{b * value, b * value}, 2);
                     }
-                    if (cellList[i][b].walls[1]) {
+                    if (cellList[i][b].getWalls()[1]) {
                         g.drawPolyline(new int[]{i * value + value, i * value + value}, new int[]{b * value, b * value + value}, 2);
                     }
-                    if (cellList[i][b].walls[2]) {
+                    if (cellList[i][b].getWalls()[2]) {
                         g.drawPolyline(new int[]{i * value + value, i * value}, new int[]{b * value + value, b * value + value}, 2);
                     }
-                    if (cellList[i][b].walls[3]) {
+                    if (cellList[i][b].getWalls()[3]) {
                         g.drawPolyline(new int[]{i * value, i * value}, new int[]{b * value + value, b * value}, 2);
                     }
 
-                    if (cellList[i][b].visited) {
+//                    if (cellList[i][b].visited) {
 //                        g.fillRect(i * value, b*value, value, value);
 //                        g.clearRect(i * value, b*value, value, value);
 
-                    }
+//                    }
                 }
             }
-            current.visited = true;
-//            g.fillRect(current.row, current.col, value, value);
-            next = current.checkNeighbours(cellList);
 
-            if (next != null) {
-                next.visited = true;
-
-                stack.push(current);
-
-                removeWalls(current, next);
-
-                current = next;
-
-                SwingUtilities.updateComponentTreeUI(frame2);
-            } else if (stack.size() > 0) {
-
-                current = stack.pop();
-
-               System.out.println(stack.size());
-
-               if (stack.size() == 0) {
-                   createExit();
-               }
-
-             SwingUtilities.updateComponentTreeUI(frame2);
-            }
+            algorithmLogic();
 
         }
 
     }
 
-    public void createCanvas() {
+    public void createCanvas(Integer size, Cell[][] cells) {
         for (int b = 0; b < size; b++) {
             for (int i = 0; i < size; i++) {
-                cellList[i][b] = new Cell(i, b);
+                cells[i][b] = new Cell(i, b);
             }
         }
 
@@ -143,25 +124,66 @@ public class LabirynthGrid {
 
 
     public void removeWalls(Cell a, Cell b) {
-        int x = a.row - b.row;
+        int x = a.getRow() - b.getRow();
 
         if (x == 1) {
-            a.walls[3] = false;
-            b.walls[1] = false;
+            a.setWall(false, 3);
+            b.setWall(false, 1);
         } else if (x == -1) {
-            a.walls[1] = false;
-            b.walls[3] = false;
+            a.setWall(false, 1);
+            b.setWall(false, 3);
         }
 
-        int y = a.col - b.col;
+        int y = a.getCol() - b.getCol();
         if (y == 1) {
-            a.walls[0] = false;
-            b.walls[2] = false;
+            a.setWall(false, 0);
+            b.setWall(false, 2);
         } else if (y == -1) {
-            a.walls[2] = false;
-            b.walls[0] = false;
+            a.setWall(false, 2);
+            b.setWall(false, 0);
         }
 
     }
+
+
+    public void ImageSave(Container c) {
+        BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        c.paint(im.getGraphics());
+        try {
+            ImageIO.write(im, "PNG", new File("shot.bmp"));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public void algorithmLogic () {
+        current.visited = true;
+//            g.fillRect(current.row, current.col, value, value);
+        next = current.checkNeighbours(cellList);
+
+        if (next != null) {
+            next.visited = true;
+
+            stack.push(current);
+
+            removeWalls(current, next);
+
+            current = next;
+
+            SwingUtilities.updateComponentTreeUI(frame2);
+        } else if (stack.size() > 0) {
+
+            current = stack.pop();
+
+            System.out.println(stack.size());
+
+            if (stack.size() == 0) {
+                createExit();
+            }
+
+            SwingUtilities.updateComponentTreeUI(frame2);
+        }
+    }
+
 
 }

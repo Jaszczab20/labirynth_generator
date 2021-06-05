@@ -17,8 +17,6 @@ import java.io.IOException;
 public class GUI {
     private JFrame frame;
     private JPanel panel;
-//    private String size;
-    private BorderLayout layout;
     private String[] diff_levels = {"Trudny", "Sredni","łatwy"};
     JFileChooser j;
     ImagePanel imgPan;
@@ -26,7 +24,6 @@ public class GUI {
 
 
     public GUI () {
-//        layout = new BorderLayout();
         frame = new JFrame();
         panel = new JPanel();
         rightBox pan = new rightBox();
@@ -42,19 +39,12 @@ public class GUI {
         title.setPreferredSize(new Dimension(2,100));
         title.setFont(new Font("Verdana", Font.PLAIN, 22));
         frame.add(title,BorderLayout.NORTH);
-//        frame.add(b2,BorderLayout.SOUTH);
-//        frame.add(new JButton("Generuj Labirynt"),BorderLayout.EAST);
         imgPan = new ImagePanel(System.getProperty("user.dir") + File.separator + "labiryntpng.png");
-//        imgPan.setBackground(Color.BLUE);
         imgPan.setSize(30, 30);
         frame.add(imgPan,BorderLayout.CENTER);
-//        frame.add(b5,BorderLayout.CENTER);
 
-
-//        panel.add(new JButton("Generuj Labirynt"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Generator Labiryntów");
-//        frame.pack();
         frame.setVisible(true);
 
     }
@@ -84,8 +74,6 @@ public class GUI {
                 @Override
                 public void actionPerformed(ActionEvent h) {
                     LabirynthGrid b = new LabirynthGrid(size_value);
-
-                    System.out.println("tutaj nowe okno z generatorem labiryntów");
                 }
             });
 
@@ -97,23 +85,17 @@ public class GUI {
             load_labirynth.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("tutaj otworzy się ookno z przeglądaniem plików");
                     File f = new File(System.getProperty("user.dir"));
                     System.out.println("rgerghe");
                     j = new JFileChooser(f, FileSystemView.getFileSystemView());
-//                    j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//                    frame.add(j, BorderLayout.CENTER);
                     int r = j.showOpenDialog(null);
                     if (r == JFileChooser.APPROVE_OPTION) {
-//                        title.setText(j.getSelectedFile().getAbsolutePath());
                         Frame fr = new JFrame();
-
                         String path = j.getSelectedFile().getAbsolutePath();
                         System.out.println(path);
                         fr.add(new ImagePanel(path));
                         fr.setSize(1000,1000);
                         fr.setVisible(true);
-//                        imgPan.setSize(30,35);
                     }
                 }
             });
@@ -171,9 +153,6 @@ public class GUI {
 
 
     }
-
-
-
 
 
 

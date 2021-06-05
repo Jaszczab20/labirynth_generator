@@ -4,15 +4,39 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Cell {
-    int row;
-    int col;
-    boolean[] walls = {true, true, true, true};
+    private int row;
+    private int col;
+    private boolean[] walls = {true, true, true, true};
     boolean visited = false;
     ArrayList<Cell> neighbours = new ArrayList<>();
 
     public Cell(int row, int col) {
         this.row = row;
         this.col = col;
+    }
+
+    public boolean[] getWalls() {
+        return walls;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public void setWalls(boolean[] walls) {
+        this.walls = walls;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 
     public void setWall(boolean wall, int index) {
@@ -27,7 +51,6 @@ public class Cell {
 
         }
     }
-
 
 
     public Cell checkNeighbours(Cell[][] celllist) {
@@ -71,11 +94,4 @@ public class Cell {
 
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
-    }
 }
