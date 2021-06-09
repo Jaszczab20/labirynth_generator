@@ -99,17 +99,14 @@ public class Cell {
 
         if (col < celllist.length -1) {
             bottom = celllist[row][col + 1];
-//        }else {
-//            bottom = celllist[row][col + 1]; //checkNegative(row,col+1, celllist);
-//        }
             neighbours.add(bottom);
-//            System.out.println("Bottom added");
         }
+
         if (row < celllist.length - 1) {
-            right = celllist[row + 1][col]; //checkNegative(row + 1,col, celllist);
+            right = celllist[row + 1][col];
             neighbours.add(right);
-//            System.out.println("Right added");
         }
+
         if (neighbours.size() > 0) {
             Random random = new Random();
             Cell ret = neighbours.get(random.nextInt(neighbours.size()));

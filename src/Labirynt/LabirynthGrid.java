@@ -18,6 +18,8 @@ public class LabirynthGrid {
     private Stack<Cell> stack = new Stack<>();
     private JFrame frame2;
     private Integer level;
+    private int easyCol = 0;
+    private int easyRow = 0;
 
     public LabirynthGrid(Integer size, Integer level) {
         this.size = size;
@@ -109,14 +111,6 @@ public class LabirynthGrid {
             }
             chooseLevel();
 
-//            if (level == 0){
-//                System.out.println("Easy");
-//                algorithmLogicEasy();
-//            }else if (level == 1){
-//                System.out.println("Hard");
-//                algorithmLogicHard();
-//            }
-
         }
 
     }
@@ -124,8 +118,7 @@ public class LabirynthGrid {
     public void createCanvas(Integer size, Cell[][] cells) {
         for (int b = 0; b < size; b++) {
             for (int i = 0; i < size; i++) {
-//                cells[i][b] = new Cell(i, b);
-                this.cellList[i][b] = new Cell(i, b);
+                cells[i][b] = new Cell(i, b);
             }
         }
 
@@ -168,10 +161,10 @@ public class LabirynthGrid {
 
     public void chooseLevel(){
         if (level == 0){
-            System.out.println("Easy");
+//            System.out.println("Easy");
             algorithmLogicEasy();
         }else if (level == 1){
-            System.out.println("Hard");
+//            System.out.println("Hard");
             algorithmLogicHard();
         }
     }
@@ -179,24 +172,22 @@ public class LabirynthGrid {
     public void algorithmLogicEasy () {
         next = current.checkNext(cellList);
         if (next != null) {
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    current = cellList[i][j];
-                    current.visited = true;
-                    next = current.checkNext(cellList);
-                    System.out.println(i + " " + j);
-                    if (next == null) {
-                        break;
-                    }
-                    removeWalls(current, next);
-                SwingUtilities.updateComponentTreeUI(frame2);
-//                frame2.repaint();
-                }
-//                if (next == null) {
-//                    break;
-//                }
-//            SwingUtilities.updateComponentTreeUI(frame2);
+
+            current = cellList[easyRow][easyCol];
+            next = current.checkNext(cellList);
+//            System.out.println(easyRow + " " + easyCol);
+            if (next != null) {
+                removeWalls(current, next);
             }
+
+            SwingUtilities.updateComponentTreeUI(frame2);
+            easyRow++;
+
+            if (easyRow >= size) {
+                easyCol++;
+                easyRow = 0;
+            }
+
             createExit();
         }
     }
