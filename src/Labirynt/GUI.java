@@ -17,7 +17,7 @@ import java.io.IOException;
 public class GUI {
     private JFrame frame;
     private JPanel panel;
-    private String[] diff_levels = {"Trudny", "Sredni","łatwy"};
+    private String[] diff_levels = {"Łatwy", "Trudny"};
     JFileChooser j;
     ImagePanel imgPan;
 
@@ -69,13 +69,14 @@ public class GUI {
                             10);                //step
 
 
-            JButton button = new JButton("Generuj Labirynt");
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent h) {
-                    LabirynthGrid b = new LabirynthGrid(size_value);
-                }
-            });
+//            JButton button = new JButton("Generuj Labirynt");
+//            button.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent h) {
+//                    int level = lev;
+//                    LabirynthGrid b = new LabirynthGrid(size_value, selected_level);
+//                }
+//            });
 
             JLabel size = new JLabel("Wymiary");
 
@@ -116,7 +117,16 @@ public class GUI {
                 public void actionPerformed(ActionEvent e) {
 //                    Integer b =;
                     selected_level = diff_levels[levels_list.getSelectedIndex()];
-                     System.out.println(selected_level);
+                    System.out.println(selected_level);
+                }
+            });
+
+            JButton button = new JButton("Generuj Labirynt");
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent h) {
+                    int level = levels_list.getSelectedIndex();
+                    LabirynthGrid b = new LabirynthGrid(size_value, level);
                 }
             });
 

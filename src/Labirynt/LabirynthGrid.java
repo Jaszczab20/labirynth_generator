@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Stack;
 
 public class LabirynthGrid {
@@ -17,9 +18,11 @@ public class LabirynthGrid {
     private Cell next;
     private Stack<Cell> stack = new Stack<>();
     private JFrame frame2;
+    private Integer level;
 
-    public LabirynthGrid(Integer size) {
+    public LabirynthGrid(Integer size, Integer level) {
         this.size = size;
+        this.level = level;
         frame2 = new JFrame();
         JPanel solve_panel = new JPanel();
         JButton solve = new JButton("Rozwiąż labirynt");
@@ -31,7 +34,7 @@ public class LabirynthGrid {
         createCanvas(size, cellList);
 
 
-        this.current = cellList[0][0];
+//        this.current = cellList[0][0];
         kwadrat kw = new kwadrat(size);
 
 
@@ -99,14 +102,13 @@ public class LabirynthGrid {
                     }
 
 //                    if (cellList[i][b].visited) {
-//                        g.fillRect(i * value, b*value, value, value);
-//                        g.clearRect(i * value, b*value, value, value);
+                        g.fillRect(i * value, b*value, value, value);
+                        g.clearRect(i * value, b*value, value, value);
 
 //                    }
                 }
             }
-
-            algorithmLogic();
+            chooseLevel();
 
         }
 
@@ -156,7 +158,27 @@ public class LabirynthGrid {
         }
     }
 
-    public void algorithmLogic () {
+    public void chooseLevel(){
+        if (level == 0){
+            algorithmLogicEasy();
+        }else if (level == 1){
+            algorithmLogicHard();
+        }
+    }
+
+    public void algorithmLogicEasy (){
+//        for(int i = 0; i<=size; i++){
+//            for (int j = 0; j<=size; j++){
+//                current = cellList[i] [j];
+//                next = current.checkNext(cellList);
+//                removeWalls(current, next);
+//                SwingUtilities.updateComponentTreeUI(frame2);
+//            }
+//        }
+    }
+
+    public void algorithmLogicHard () {
+        current = cellList[0][0];
         current.visited = true;
 //            g.fillRect(current.row, current.col, value, value);
         next = current.checkNeighbours(cellList);
@@ -184,6 +206,8 @@ public class LabirynthGrid {
             SwingUtilities.updateComponentTreeUI(frame2);
         }
     }
+
+
 
 
 }
