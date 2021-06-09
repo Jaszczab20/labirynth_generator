@@ -102,8 +102,8 @@ public class LabirynthGrid {
                     }
 
 //                    if (cellList[i][b].visited) {
-                        g.fillRect(i * value, b*value, value, value);
-                        g.clearRect(i * value, b*value, value, value);
+//                        g.fillRect(i * value, b*value, value, value);
+//                        g.clearRect(i * value, b*value, value, value);
 
 //                    }
                 }
