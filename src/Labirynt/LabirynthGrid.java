@@ -17,9 +17,13 @@ public class LabirynthGrid {
     private Cell next;
     private Stack<Cell> stack = new Stack<>();
     private JFrame frame2;
+    private Integer level;
+    private int easyCol = 0;
+    private int easyRow = 0;
 
-    public LabirynthGrid(Integer size) {
+    public LabirynthGrid(Integer size, Integer level) {
         this.size = size;
+        this.level = level;
         frame2 = new JFrame();
         JPanel solve_panel = new JPanel();
         JButton solve = new JButton("Rozwiąż labirynt");
@@ -105,8 +109,7 @@ public class LabirynthGrid {
 //                    }
                 }
             }
-
-            algorithmLogic();
+            chooseLevel();
 
         }
 
@@ -156,7 +159,41 @@ public class LabirynthGrid {
         }
     }
 
-    public void algorithmLogic () {
+    public void chooseLevel(){
+        if (level == 0){
+//            System.out.println("Easy");
+            algorithmLogicEasy();
+        }else if (level == 1){
+//            System.out.println("Hard");
+            algorithmLogicHard();
+        }
+    }
+
+    public void algorithmLogicEasy () {
+        next = current.checkNext(cellList);
+        if (next != null) {
+
+            current = cellList[easyRow][easyCol];
+            next = current.checkNext(cellList);
+//            System.out.println(easyRow + " " + easyCol);
+            if (next != null) {
+                removeWalls(current, next);
+            }
+
+            SwingUtilities.updateComponentTreeUI(frame2);
+            easyRow++;
+
+            if (easyRow >= size) {
+                easyCol++;
+                easyRow = 0;
+            }
+
+            createExit();
+        }
+    }
+
+    public void algorithmLogicHard () {
+//        current = cellList[0][0];
         current.visited = true;
 //            g.fillRect(current.row, current.col, value, value);
         next = current.checkNeighbours(cellList);
@@ -184,6 +221,8 @@ public class LabirynthGrid {
             SwingUtilities.updateComponentTreeUI(frame2);
         }
     }
+
+
 
 
 }

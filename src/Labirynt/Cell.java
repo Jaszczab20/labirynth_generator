@@ -91,7 +91,30 @@ public class Cell {
         }
 
 
+    }
 
+    public Cell checkNext(Cell[][] celllist){
+        Cell bottom;
+        Cell right;
+
+        if (col < celllist.length -1) {
+            bottom = celllist[row][col + 1];
+            neighbours.add(bottom);
+        }
+
+        if (row < celllist.length - 1) {
+            right = celllist[row + 1][col];
+            neighbours.add(right);
+        }
+
+        if (neighbours.size() > 0) {
+            Random random = new Random();
+            Cell ret = neighbours.get(random.nextInt(neighbours.size()));
+            neighbours.clear();
+            return ret;
+        } else {
+            return null;
+        }
     }
 
 }
