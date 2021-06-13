@@ -150,11 +150,11 @@ public class LabirynthGrid {
             System.out.println(solves.size());
             if (finish == cellList[c][j]){
                 for (Cell solve : solves) {
-                    g.fillRect((int) (value * solve.getRow()+0.35*value), (int) (value * solve.getCol()+0.35*value), (int) (0.2*value), (int) (0.2*value));
+                    g.fillRect((int) (value * solve.getRow()+0.35*value), (int) (value * solve.getCol()+0.35*value), (int) (0.23*value), (int) (0.23*value));
 
 
                 }
-                g.fillRect((int) (value*finish.getRow()+0.35*value), (int) (value*finish.getCol()+0.35*value), (int) (0.2*value), (int) (0.2*value));
+                g.fillRect((int) (value*finish.getRow()+0.35*value), (int) (value*finish.getCol()+0.35*value), (int) (0.23*value), (int) (0.23*value));
             }
 
         }
