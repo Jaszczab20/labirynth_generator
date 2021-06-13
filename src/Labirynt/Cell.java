@@ -81,7 +81,7 @@ public class Cell {
             Random random = new Random();
             Cell ret = neighbourspath.get(random.nextInt(neighbourspath.size()));
             neighbourspath.clear();
-            //System.out.println(ret.getRow());
+
             return ret;
 
         } else {

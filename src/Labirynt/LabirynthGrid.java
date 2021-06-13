@@ -14,7 +14,6 @@ import java.util.Stack;
 public class LabirynthGrid {
     private Integer size;
     private Cell[][] cellList;
-    private Cell[][] cellfin;
     private Cell current;
     private Cell next;
     private Stack<Cell> stack = new Stack<>();
@@ -54,15 +53,14 @@ public class LabirynthGrid {
 
                 frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame1.setTitle("Generator Labiryntów");
-                frame2.setVisible(false);
                 frame1.setVisible(true);
 
             }
         });
         JButton save = new JButton("Zapisz Labirynt");
         cellList = new Cell[size][size];
-        frame2.setSize(800,800);
-        frame1.setSize(800,800);
+        frame2.setSize(750,800);
+        frame1.setSize(750,800);
 
 
         createCanvas(size, cellList);
@@ -71,7 +69,7 @@ public class LabirynthGrid {
         this.current = cellList[0][0];
         kwadrat kw = new kwadrat(size);
         this.finish = cellList[0][0];
-        //
+
 
 
         save.addActionListener(new ActionListener() {
@@ -140,35 +138,23 @@ public class LabirynthGrid {
                     if (cellList[i][b].getWalls()[3]) {
                         g.drawPolyline(new int[]{i * value, i * value}, new int[]{b * value + value, b * value}, 2);
                     }
-                   // if (cellList[i][b].visited) {
-                   //   g.fillRect(i * value, b*value, value, value);
-                   //    g.clearRect(i * value, b*value, value, value);
 
-//                    }
                 }
             }
             if (x.equals("b")){chooseLevel();}
             if (x.equals("a"))
-            {solve2();}
-            //Graphics2D g2 = (Graphics2D) g;
+            {solve();}
+
             g.setColor(Color.red);
-            //g.fillRect(20,20,7,7);
-            ;
-
-
-
-
-            //System.out.println(Arrays.toString(current.getWalls()));
-            //System.out.println(Arrays.toString(cellList[9][9].getWalls()));
-            //System.out.println(Arrays.toString(cellList[8][9].getWalls()));
 
             System.out.println(solves.size());
             if (finish == cellList[c][j]){
                 for (Cell solve : solves) {
-                    g.fillRect((int) (value * solve.getRow()+0.35*value), (int) (value * solve.getCol()+0.35*value), (int) (0.35*value), (int) (0.35*value));
+                    g.fillRect((int) (value * solve.getRow()+0.35*value), (int) (value * solve.getCol()+0.35*value), (int) (0.2*value), (int) (0.2*value));
+
 
                 }
-                g.fillRect((int) (value*finish.getRow()+0.35*value), (int) (value*finish.getCol()+0.35*value), (int) (0.35*value), (int) (0.35*value));
+                g.fillRect((int) (value*finish.getRow()+0.35*value), (int) (value*finish.getCol()+0.35*value), (int) (0.2*value), (int) (0.2*value));
             }
 
         }
@@ -221,15 +207,13 @@ public class LabirynthGrid {
 
     public void chooseLevel(){
         if (level == 0){
-//            System.out.println("Easy");
+
             algorithmLogicEasy();
         }else if (level == 1){
-//            System.out.println("Hard");
+
             algorithmLogicHard();
         }
-        else if (x.equals("a")){
-            solve2();
-        }
+
     }
 
     public void algorithmLogicEasy () {
@@ -287,12 +271,8 @@ public class LabirynthGrid {
             SwingUtilities.updateComponentTreeUI(frame2);
         }
     }
-    public void solve2(){
-        //try {
-        //    Thread.sleep(50);
-        //} catch (InterruptedException e) {
-        //    e.printStackTrace();
-       // }
+    public void solve(){
+
 
         finish.visitedb = true;
         next = finish.checkWalls(cellList);
@@ -307,66 +287,11 @@ public class LabirynthGrid {
         else if (solves.size() > 0 && finish != cellList[size-1][size-1])
         {
             finish = solves.pop();
-            //if (finish == cellList[c][j]){
-            //    return true;
-            //}
+
             SwingUtilities.updateComponentTreeUI(frame1);
         }
-
-
-
-
-
     }
-    public boolean solve(){
-
-        finish = cellList[c][j];
-        if(finish == cellList[0][0]){
-            return true;
-        }
-
-        boolean[] w = finish.getWalls();
-
-
-
-        if(!w[0] && cellList[c][j-1] != null  && !cellList[c][j-1].visitedb){
-            next = cellList[c][j-1];
-            j = j-1;
-            solves.push(finish);
-            finish.visitedb = true;}
-        else if(!w[1] && cellList[c+1][j] != null  && !cellList[c+1][j].visitedb){
-            next = cellList[c+1][j];
-            c = c+1;
-            solves.push(finish);
-            finish.visitedb = true;}
-        else if(!w[2] && cellList[c][j+1] != null  && !cellList[c][j+1].visitedb){
-            next = cellList[c][j+1];
-            j = j+1;
-            solves.push(finish);
-            finish.visitedb = true;}
-        else if(!w[3] && cellList[c-1][j] != null  && !cellList[c-1][j].visitedb) {
-            next = cellList[c - 1][j];
-            j = j + 1;
-            solves.push(finish);
-            finish.visitedb = true;
-        }
-        else {
-            finish = stack.pop();
-
-        }
-        return false;
-    }
-    public void solve1(){
-        finish.visited = true;
-        next = finish.checkNeighbours(cellList);
-        if(next != cellList[0][0]) {
-             stack.push(finish);
-
-
-        }
-        }
-
-    }
+}
 
 
 
