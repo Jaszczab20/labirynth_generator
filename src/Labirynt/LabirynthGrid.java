@@ -236,28 +236,45 @@ public class LabirynthGrid {
             SwingUtilities.updateComponentTreeUI(frame2);
         }
     }
-    public void solve(){
+    public boolean solve(){
 
         finish = cellList[c][j];
+        if(finish == cellList[0][0]){
+            return true;
+        }
+
         boolean[] w = finish.getWalls();
         boolean[] leftwall = cellList[c-1][j].getWalls();
         boolean[] rightwall = cellList[c+1][j].getWalls();
         boolean[] topwall = cellList[c][j+1].getWalls();
         boolean[] bottomwall = cellList[c][j-1].getWalls();
-        if(!w[0] && cellList[c][j-1] != null && !bottomwall[2])
+
+        if(!w[0] && cellList[c][j-1] != null && !bottomwall[2]){
             next = cellList[c][j-1];
             j = j-1;
-        if(!w[1] && cellList[c+1][j] != null && !rightwall[3])
+            solves.push(finish);
+            finish.visited = true;}
+        else if(!w[1] && cellList[c+1][j] != null && !rightwall[3]){
             next = cellList[c+1][j];
             c = c+1;
-        if(!w[2] && cellList[c][j+1] != null && !topwall[0])
+            solves.push(finish);
+            finish.visited = true;}
+        else if(!w[2] && cellList[c][j+1] != null && !topwall[0]){
             next = cellList[c][j+1];
             j = j+1;
-        if(!w[3] && cellList[c-1][j] != null && !leftwall[1])
-            next = cellList[c-1][j];
-        j = j+1;
+            solves.push(finish);
+            finish.visited = true;}
+        else if(!w[3] && cellList[c-1][j] != null && !leftwall[1]) {
+            next = cellList[c - 1][j];
+            j = j + 1;
+            solves.push(finish);
+            finish.visited = true;
+        }
+        else if (finish.visited){
+            current = stack.pop();
 
-
+        }
+        return false;
     }
     public void solve1(){
         finish.visited = true;
