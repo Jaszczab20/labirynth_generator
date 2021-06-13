@@ -153,17 +153,23 @@ public class LabirynthGrid {
             //Graphics2D g2 = (Graphics2D) g;
             g.setColor(Color.red);
             //g.fillRect(20,20,7,7);
-            int p = 5;
-            while(p > 0){
-            g.fillRect(value*finish.getRow(), value*finish.getCol(), 10, 10);
-            p = p-1;}
+            ;
+
+
+
 
             //System.out.println(Arrays.toString(current.getWalls()));
             //System.out.println(Arrays.toString(cellList[9][9].getWalls()));
             //System.out.println(Arrays.toString(cellList[8][9].getWalls()));
 
-            System.out.println(solves);
-            if (finish == cellList[c][j]){System.out.println("aaaa");}
+            System.out.println(solves.size());
+            if (finish == cellList[c][j]){
+                for (Cell solve : solves) {
+                    g.fillRect((int) (value * solve.getRow()+0.35*value), (int) (value * solve.getCol()+0.35*value), (int) (0.35*value), (int) (0.35*value));
+
+                }
+                g.fillRect((int) (value*finish.getRow()+0.35*value), (int) (value*finish.getCol()+0.35*value), (int) (0.35*value), (int) (0.35*value));
+            }
 
         }
 
@@ -282,23 +288,23 @@ public class LabirynthGrid {
         }
     }
     public void solve2(){
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //try {
+        //    Thread.sleep(50);
+        //} catch (InterruptedException e) {
+        //    e.printStackTrace();
+       // }
 
         finish.visitedb = true;
         next = finish.checkWalls(cellList);
 
-        if(next != cellList[size-1][size-1] && next != null){
+        if(finish != cellList[size-1][size-1] && next != null){
             next.visitedb = true;
             solves.push(finish);
             finish = next;
             SwingUtilities.updateComponentTreeUI(frame1);
 
         }
-        else if (solves.size() > 0)
+        else if (solves.size() > 0 && finish != cellList[size-1][size-1])
         {
             finish = solves.pop();
             //if (finish == cellList[c][j]){
@@ -306,6 +312,10 @@ public class LabirynthGrid {
             //}
             SwingUtilities.updateComponentTreeUI(frame1);
         }
+
+
+
+
 
     }
     public boolean solve(){
