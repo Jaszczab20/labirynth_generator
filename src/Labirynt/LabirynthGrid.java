@@ -14,11 +14,13 @@ import java.util.Stack;
 public class LabirynthGrid {
     private Integer size;
     private Cell[][] cellList;
+    private Cell[][] cellfin;
     private Cell current;
     private Cell next;
     private Stack<Cell> stack = new Stack<>();
     private Stack<Cell> solves = new Stack<>();
     private JFrame frame2;
+    private JFrame frame1;
     private Integer level;
     private int easyCol = 0;
     private int easyRow = 0;
@@ -37,11 +39,30 @@ public class LabirynthGrid {
 
         this.level = level;
         frame2 = new JFrame();
+        frame1 = new JFrame();
         JPanel solve_panel = new JPanel();
         JButton solve = new JButton("Rozwiąż labirynt");
+        solve.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                x = "a";
+                kwadrat nowy = new kwadrat(size);
+
+                frame1.add(nowy, BorderLayout.CENTER);
+                //frame1.add(solve_panel, BorderLayout.SOUTH);
+                frame1.setLocationRelativeTo(null);
+
+                frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame1.setTitle("Generator Labiryntów");
+                frame2.setVisible(false);
+                frame1.setVisible(true);
+
+            }
+        });
         JButton save = new JButton("Zapisz Labirynt");
         cellList = new Cell[size][size];
         frame2.setSize(800,800);
+        frame1.setSize(800,800);
 
 
         createCanvas(size, cellList);
@@ -50,6 +71,7 @@ public class LabirynthGrid {
         this.current = cellList[0][0];
         kwadrat kw = new kwadrat(size);
         this.finish = cellList[0][0];
+        //
 
 
         save.addActionListener(new ActionListener() {
@@ -71,6 +93,9 @@ public class LabirynthGrid {
         frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame2.setTitle("Generator Labiryntów");
         frame2.setVisible(true);
+
+
+
 
     }
 
@@ -96,6 +121,7 @@ public class LabirynthGrid {
         }
 
         public void paintComponent(Graphics g) {
+            super.paintComponent(g);
             Integer value = (Integer) 720 / size;
 
 
@@ -121,13 +147,23 @@ public class LabirynthGrid {
 //                    }
                 }
             }
-            chooseLevel();
-            //g.setColor(Color.red);
-            //g.fillRect(20,20,7,7);
-            System.out.println(Arrays.toString(current.getWalls()));
-            System.out.println(cellList[9][9]);
+            if (x.equals("b")){chooseLevel();}
             if (x.equals("a"))
             {solve2();}
+            //Graphics2D g2 = (Graphics2D) g;
+            g.setColor(Color.red);
+            //g.fillRect(20,20,7,7);
+            int p = 5;
+            while(p > 0){
+            g.fillRect(value*finish.getRow(), value*finish.getCol(), 10, 10);
+            p = p-1;}
+
+            //System.out.println(Arrays.toString(current.getWalls()));
+            //System.out.println(Arrays.toString(cellList[9][9].getWalls()));
+            //System.out.println(Arrays.toString(cellList[8][9].getWalls()));
+
+            System.out.println(solves);
+            if (finish == cellList[c][j]){System.out.println("aaaa");}
 
         }
 
@@ -185,6 +221,9 @@ public class LabirynthGrid {
 //            System.out.println("Hard");
             algorithmLogicHard();
         }
+        else if (x.equals("a")){
+            solve2();
+        }
     }
 
     public void algorithmLogicEasy () {
@@ -207,7 +246,7 @@ public class LabirynthGrid {
             }
 
             createExit();
-            x = "a";
+
         }
     }
 
@@ -218,7 +257,7 @@ public class LabirynthGrid {
 //            g.fillRect(current.row, current.col, value, value);
         next = current.checkNeighbours(cellList);
 
-        if (next != null) {
+        if (next != null ) {
             next.visited = true;
 
             stack.push(current);
@@ -236,32 +275,38 @@ public class LabirynthGrid {
 
             if (stack.size() == 0) {
                 createExit();
-                x = "a";
+
             }
 
             SwingUtilities.updateComponentTreeUI(frame2);
         }
     }
-    public boolean solve2(){
+    public void solve2(){
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         finish.visitedb = true;
         next = finish.checkWalls(cellList);
 
-        if(next != null){
+        if(next != cellList[size-1][size-1] && next != null){
             next.visitedb = true;
-            stack.push(finish);
+            solves.push(finish);
             finish = next;
-            SwingUtilities.updateComponentTreeUI(frame2);
+            SwingUtilities.updateComponentTreeUI(frame1);
 
         }
-        else if (stack.size() > 0)
+        else if (solves.size() > 0)
         {
-            finish = stack.pop();
-            if (finish == cellList[c][j]){
-                return true;
-            }
-            SwingUtilities.updateComponentTreeUI(frame2);
+            finish = solves.pop();
+            //if (finish == cellList[c][j]){
+            //    return true;
+            //}
+            SwingUtilities.updateComponentTreeUI(frame1);
         }
-        return false;
+
     }
     public boolean solve(){
 

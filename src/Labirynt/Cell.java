@@ -61,26 +61,29 @@ public class Cell {
         Cell bottom = checkNegative(row, col + 1, celllist);
 
         Cell left = checkNegative(row - 1, col, celllist);
-        if (top != null && !top.visited && celllist[row][col].getWalls()[0] && top.getWalls()[2]) {
+        if (top != null && !top.visitedb && celllist[row][col].getWalls()[0] && top.getWalls()[2]) {
             neighbourspath.add(top);
         }
 
-        if (right != null && !right.visited && celllist[row][col].getWalls()[1] && right.getWalls()[3]) {
+        if (right != null && !right.visitedb && celllist[row][col].getWalls()[1] && right.getWalls()[3]) {
             neighbourspath.add(right);
         }
 
-        if (bottom != null && !bottom.visited && celllist[row][col].getWalls()[2] && bottom.getWalls()[0]) {
+        if (bottom != null && !bottom.visitedb && celllist[row][col].getWalls()[2] && bottom.getWalls()[0]) {
             neighbourspath.add(bottom);
         }
 
-        if (left != null && !left.visited && celllist[row][col].getWalls()[3] && left.getWalls()[1]) {
+        if (left != null && !left.visitedb && celllist[row][col].getWalls()[3] && left.getWalls()[1]) {
             neighbourspath.add(left);
         }
         if (neighbourspath.size() > 0) {
+            System.out.println(neighbourspath);
             Random random = new Random();
             Cell ret = neighbourspath.get(random.nextInt(neighbourspath.size()));
             neighbourspath.clear();
+            //System.out.println(ret.getRow());
             return ret;
+
         } else {
             return null;
         }
