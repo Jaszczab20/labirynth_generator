@@ -30,34 +30,40 @@ public class LabirynthGrid {
 
 
 
+
     public LabirynthGrid(Integer size, Integer level) {
         this.size = size;
         c= size-1;
         j = size-1;
         x = "b";
+        JButton save = new JButton("Zapisz Labirynt");
 
         this.level = level;
         frame2 = new JFrame();
         frame1 = new JFrame();
         JPanel solve_panel = new JPanel();
+
+
         JButton solve = new JButton("Rozwiąż labirynt");
+
         solve.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 x = "a";
+                JPanel savep = new JPanel();
                 kwadrat nowy = new kwadrat(size);
+                savep.add(save, BorderLayout.NORTH);
 
                 frame1.add(nowy, BorderLayout.CENTER);
-                //frame1.add(solve_panel, BorderLayout.SOUTH);
+                frame1.add(savep, BorderLayout.SOUTH);
                 frame1.setLocationRelativeTo(null);
-
                 frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame1.setTitle("Generator Labiryntów");
+                frame1.setTitle("Rozwiązanie Labiryntu");
                 frame1.setVisible(true);
 
             }
         });
-        JButton save = new JButton("Zapisz Labirynt");
+
         cellList = new Cell[size][size];
         frame2.setSize(750,800);
         frame1.setSize(750,800);
