@@ -1,7 +1,9 @@
 package Labirynt;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -202,12 +204,23 @@ public class LabirynthGrid {
 
 
     public void ImageSave(Container c) {
-        BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        c.paint(im.getGraphics());
-        try {
-            ImageIO.write(im, "PNG", new File("shot.bmp"));
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+        File f = new File(System.getProperty("user.dir"));
+        JFileChooser j = new JFileChooser(f, FileSystemView.getFileSystemView());
+        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        j.setCurrentDirectory(new File(System.getProperty("user.dir")+"Labirynt.png"));
+        int r = j.showSaveDialog(null);
+        if (r == JFileChooser.APPROVE_OPTION) {
+            String path = j.getSelectedFile().getAbsolutePath();
+            System.out.println(path);
+            BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            c.paint(im.getGraphics());
+            try {
+//                ImageIO.write(im, "PNG", new File(path+System.getProperty("file.separator")+
+//                        "shot.png"));
+                ImageIO.write(im, "PNG", new File(path+".png"));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 
