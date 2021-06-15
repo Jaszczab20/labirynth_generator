@@ -69,15 +69,6 @@ public class GUI {
                             10);                //step
 
 
-//            JButton button = new JButton("Generuj Labirynt");
-//            button.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent h) {
-//                    int level = lev;
-//                    LabirynthGrid b = new LabirynthGrid(size_value, selected_level);
-//                }
-//            });
-
             JLabel size = new JLabel("Wymiary");
 
             JLabel diff_level = new JLabel("Poziom Trudności");
@@ -87,13 +78,11 @@ public class GUI {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     File f = new File(System.getProperty("user.dir"));
-                    System.out.println("rgerghe");
                     j = new JFileChooser(f, FileSystemView.getFileSystemView());
                     int r = j.showOpenDialog(null);
                     if (r == JFileChooser.APPROVE_OPTION) {
                         Frame fr = new JFrame();
                         String path = j.getSelectedFile().getAbsolutePath();
-                        System.out.println(path);
                         fr.add(new ImagePanel(path));
                         fr.setSize(1000,1000);
                         fr.setVisible(true);
@@ -106,7 +95,6 @@ public class GUI {
                 @Override
                 public void stateChanged(ChangeEvent e) {
                     size_value = (Integer) input_size.getValue();
-                    System.out.println(size_value);
                 }
             });
 
@@ -115,9 +103,7 @@ public class GUI {
             levels_list.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-//                    Integer b =;
                     selected_level = diff_levels[levels_list.getSelectedIndex()];
-                    System.out.println(selected_level);
                 }
             });
 
@@ -163,7 +149,6 @@ public class GUI {
 
 
     }
-
 
 
 

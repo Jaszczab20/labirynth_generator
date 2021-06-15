@@ -77,7 +77,7 @@ public class Cell {
             neighbourspath.add(left);
         }
         if (neighbourspath.size() > 0) {
-            System.out.println(neighbourspath);
+
             Random random = new Random();
             Cell ret = neighbourspath.get(random.nextInt(neighbourspath.size()));
             neighbourspath.clear();

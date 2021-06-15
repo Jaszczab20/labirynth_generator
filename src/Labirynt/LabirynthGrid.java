@@ -155,7 +155,6 @@ public class LabirynthGrid {
 
             g.setColor(Color.red);
 
-            System.out.println(solves.size());
             if (finish == cellList[c][j]){
                 for (Cell solve : solves) {
                     g.fillRect((int) (value * solve.getRow()+0.35*value), (int) (value * solve.getCol()+0.35*value), (int) (0.23*value), (int) (0.23*value));
@@ -204,33 +203,33 @@ public class LabirynthGrid {
 
 
     public void ImageSave(Container c) {
+
         File f = new File(System.getProperty("user.dir"));
         JFileChooser j = new JFileChooser(f, FileSystemView.getFileSystemView());
         j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        j.setCurrentDirectory(new File(System.getProperty("user.dir")+"Labirynt.png"));
         int r = j.showSaveDialog(null);
+
         if (r == JFileChooser.APPROVE_OPTION) {
             String path = j.getSelectedFile().getAbsolutePath();
-            System.out.println(path);
             BufferedImage im = new BufferedImage(c.getWidth()-10, c.getHeight()-40, BufferedImage.TYPE_INT_ARGB);
             c.paint(im.getGraphics());
             try {
-//                ImageIO.write(im, "PNG", new File(path+System.getProperty("file.separator")+
-//                        "shot.png"));
                 ImageIO.write(im, "PNG", new File(path+".png"));
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
         }
+
     }
 
     public void chooseLevel(){
+
         if (level == 0){
-
             algorithmLogicEasy();
-        }else if (level == 1){
 
+        }  else if (level == 1){
             algorithmLogicHard();
+
         }
 
     }
@@ -241,7 +240,7 @@ public class LabirynthGrid {
 
             current = cellList[easyRow][easyCol];
             next = current.checkNext(cellList);
-//            System.out.println(easyRow + " " + easyCol);
+
             if (next != null) {
                 removeWalls(current, next);
             }
@@ -261,9 +260,9 @@ public class LabirynthGrid {
 
 
     public void algorithmLogicHard () {
-//        current = cellList[0][0];
+
         current.visited = true;
-//            g.fillRect(current.row, current.col, value, value);
+
         next = current.checkNeighbours(cellList);
 
         if (next != null ) {
@@ -280,8 +279,6 @@ public class LabirynthGrid {
 
             current = stack.pop();
 
-            System.out.println(stack.size());
-
             if (stack.size() == 0) {
                 createExit();
 
@@ -290,13 +287,15 @@ public class LabirynthGrid {
             SwingUtilities.updateComponentTreeUI(frame2);
         }
     }
-    public void solve(){
 
+
+    public void solve(){
 
         finish.visitedb = true;
         next = finish.checkWalls(cellList);
 
-        if(finish != cellList[size-1][size-1] && next != null){
+        if  (finish != cellList[size-1][size-1] && next != null){
+
             next.visitedb = true;
             solves.push(finish);
             finish = next;

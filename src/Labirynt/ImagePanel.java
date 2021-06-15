@@ -13,18 +13,17 @@ public class ImagePanel extends JPanel {
         private BufferedImage image;
 
         public ImagePanel(String path) {
-            System.out.println(path);
             try {
                 image = ImageIO.read(new File(path));
             } catch (IOException ex) {
-                // handle exception...
+                System.out.println(ex);
             }
         }
 
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(image, 30, 30, this); // see javadoc for more info on the parameters
+            g.drawImage(image, 30, 30, this);
         }
 
     @Override
