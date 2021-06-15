@@ -212,7 +212,7 @@ public class LabirynthGrid {
         if (r == JFileChooser.APPROVE_OPTION) {
             String path = j.getSelectedFile().getAbsolutePath();
             System.out.println(path);
-            BufferedImage im = new BufferedImage(c.getWidth()-20, c.getHeight()-40, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage im = new BufferedImage(c.getWidth()-10, c.getHeight()-40, BufferedImage.TYPE_INT_ARGB);
             c.paint(im.getGraphics());
             try {
 //                ImageIO.write(im, "PNG", new File(path+System.getProperty("file.separator")+
