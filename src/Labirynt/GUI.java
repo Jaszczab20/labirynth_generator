@@ -153,11 +153,7 @@ public class GUI {
 
 
         public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(
-                () -> {GUI g = new GUI();}
-        );
-
+        GUI g = new GUI();
     }
 }
 
